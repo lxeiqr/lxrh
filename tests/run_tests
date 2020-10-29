@@ -1,0 +1,16 @@
+#!/bin/sh
+
+for x in *.c
+do
+    cc $x 
+    ./a.out
+
+    if [ $? -eq 0 ]
+    then
+        echo "[OK]       $x"  
+    else
+        echo "^^^ [FAIL] $x"  
+    fi
+
+    rm a.out
+done
