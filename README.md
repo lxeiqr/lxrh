@@ -2,4 +2,4 @@
 
 Name | Description
 ---- | -----------
-lxrh_ll.h | Linked Lists (WIP)
+lxrh_ll.h | Linked Lists
