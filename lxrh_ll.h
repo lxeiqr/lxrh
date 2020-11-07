@@ -11,46 +11,46 @@
 #endif
 
 #define LXRH_LL_DECLARE(NAME, TYPE) \
-    typedef struct lxrh_ll_##NAME { \
-        struct lxrh_ll_##NAME *next; \
+    typedef struct NAME { \
+        struct NAME *next; \
         TYPE data; \
-    } lxrh_ll_##NAME ; \
-    void lxrh_ll_##NAME##_push(struct lxrh_ll_##NAME **s, TYPE data); \
-    struct lxrh_ll_##NAME *lxrh_ll_##NAME##_next(struct lxrh_ll_##NAME *s); \
-    struct lxrh_ll_##NAME *lxrh_ll_##NAME##_get(struct lxrh_ll_##NAME *s, size_t index); \
-    int lxrh_ll_##NAME##_pop(struct lxrh_ll_##NAME *s, size_t index); \
-    void lxrh_ll_##NAME##_free(struct lxrh_ll_##NAME *s);
+    } NAME ; \
+    void NAME##_push(struct NAME **s, TYPE data); \
+    struct NAME * NAME##_next(struct NAME *s); \
+    struct NAME * NAME##_get(struct NAME *s, size_t index); \
+    int NAME##_pop(struct NAME *s, size_t index); \
+    void NAME##_free(struct NAME *s);
 
 #define LXRH_LL_DEFINE(NAME, TYPE) \
-    void lxrh_ll_##NAME##_push(struct lxrh_ll_##NAME **s, TYPE data) { \
-        struct lxrh_ll_##NAME **p = s; \
+    void NAME##_push(struct NAME **s, TYPE data) { \
+        struct NAME **p = s; \
         while(*p != NULL) {p = &(*p)->next;} \
-        *p = LXRH_MALLOC(sizeof(struct lxrh_ll_##NAME )); \
+        *p = LXRH_MALLOC(sizeof(struct NAME )); \
         (*p)->data = data; \
         (*p)->next = NULL; \
     } \
     \
-    struct lxrh_ll_##NAME *lxrh_ll_##NAME##_next(struct lxrh_ll_##NAME *s) { \
+    struct NAME * NAME##_next(struct NAME *s) { \
         if(s == NULL) \
             return s; \
         else \
             return s->next; \
     } \
-    struct lxrh_ll_##NAME *lxrh_ll_##NAME##_get(struct lxrh_ll_##NAME *s, size_t index) { \
-        struct lxrh_ll_##NAME *next = s; \
+    struct NAME * NAME##_get(struct NAME *s, size_t index) { \
+        struct NAME *next = s; \
         for(size_t i = 0; i < index; i++) { \
             if(next == NULL) return NULL; \
-            next = lxrh_ll_##NAME##_next(next); \
+            next = NAME##_next(next); \
         } \
         \
         return next; \
     } \
-    int lxrh_ll_##NAME##_pop(struct lxrh_ll_##NAME *s, size_t index) { \
-        struct lxrh_ll_##NAME *next, *p = s; \
+    int NAME##_pop(struct NAME *s, size_t index) { \
+        struct NAME *next, *p = s; \
         if(index == 0) \
             return -1; \
         \
-        p = lxrh_ll_##NAME##_get(p, index-1); \
+        p = NAME##_get(p, index-1); \
         if(p->next == NULL) \
             return -1; \
         \
@@ -60,8 +60,8 @@
         \
         return 0; \
     } \
-    void lxrh_ll_##NAME##_free(struct lxrh_ll_##NAME *s) { \
-        struct lxrh_ll_##NAME *next; \
+    void NAME##_free(struct NAME *s) { \
+        struct NAME *next; \
         while(s != NULL) { \
             next = s->next; \
             free(s); \
