@@ -15,19 +15,21 @@
         struct NAME *next; \
         TYPE data; \
     } NAME ; \
-    void NAME##_push(struct NAME **s, TYPE data); \
+    struct NAME * NAME##_push(struct NAME **s, TYPE data); \
     struct NAME * NAME##_next(struct NAME *s); \
     struct NAME * NAME##_get(struct NAME *s, size_t index); \
     int NAME##_pop(struct NAME *s, size_t index); \
     void NAME##_free(struct NAME *s);
 
 #define LXRH_LL_DEFINE(NAME, TYPE) \
-    void NAME##_push(struct NAME **s, TYPE data) { \
+    struct NAME * NAME##_push(struct NAME **s, TYPE data) { \
         struct NAME **p = s; \
         while(*p != NULL) {p = &(*p)->next;} \
         *p = LXRH_MALLOC(sizeof(struct NAME )); \
         (*p)->data = data; \
         (*p)->next = NULL; \
+        \
+        return *p; \
     } \
     \
     struct NAME * NAME##_next(struct NAME *s) { \

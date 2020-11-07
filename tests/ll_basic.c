@@ -9,7 +9,8 @@ int main() {
     ll_int *s = NULL;
 
     for(int i = 0; i < 10; i++)
-        ll_int_push(&s, i);
+        if(ll_int_push(&s, i)->data != i)
+            return 1;
 
     if(ll_int_get(s, 5)->data != 5)
         return 1;
