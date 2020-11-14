@@ -18,7 +18,7 @@
     struct NAME * NAME##_push(struct NAME **s, TYPE data); \
     struct NAME * NAME##_next(struct NAME *s); \
     struct NAME * NAME##_get(struct NAME *s, size_t index); \
-    int NAME##_pop(struct NAME *s, size_t index); \
+    int NAME##_pop(struct NAME **s, size_t index); \
     void NAME##_free(struct NAME *s);
 
 #define LXRH_LL_DEFINE(NAME, TYPE) \
@@ -47,10 +47,17 @@
         \
         return next; \
     } \
-    int NAME##_pop(struct NAME *s, size_t index) { \
-        struct NAME *next, *p = s; \
-        if(index == 0) \
-            return -1; \
+    int NAME##_pop(struct NAME **s, size_t index) { \
+        struct NAME *next, *p = *s; \
+        if(*s == NULL) \
+            return 0; \
+        \
+        if(index == 0) { \
+            next = (*s)->next; \
+            LXRH_FREE(*s); \
+            *s = next;\
+            return 0; \
+        }\
         \
         p = NAME##_get(p, index-1); \
         if(p->next == NULL) \

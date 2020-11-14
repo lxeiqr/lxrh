@@ -15,9 +15,14 @@ int main() {
     if(ll_int_get(s, 5)->data != 5)
         return 1;
     
-    ll_int_pop(s, 5);
+    ll_int_pop(&s, 5);
     
     if(ll_int_get(s, 8)->data != 9)
+        return 1;
+    
+    // Test poppping first element
+    ll_int_pop(&s, 0);
+    if(ll_int_get(s, 0)->data != 1) 
         return 1;
     
     ll_int_free(s);
