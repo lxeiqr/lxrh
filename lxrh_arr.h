@@ -33,7 +33,7 @@
     int NAME##_pop(struct NAME *s, size_t index) { \
         if(index + 1 > s->n) \
             return 1; \
-        memmove(s->p + index, s->p + index + 1, s->n - index); \
+        memmove(s->p + index, s->p + index + 1, sizeof(TYPE) * (s->n - index - 1)); \
         s->p = LXRH_REALLOC(s->p, (--s->n) * sizeof(TYPE)); \
         return 0; \
     } \
